@@ -16,7 +16,7 @@ Instructions:
 3. Test execution with Ctrl+Enter (or in psql).
 4. SQL keywords should be UPPERCASE (SELECT, FROM, ORDER BY, AS).
 ====================================================================
-*/
+*/   
 
 -- ==================================================================
 -- CHALLENGE 1: The Clean Contact List
@@ -28,8 +28,13 @@ Instructions:
 -- Format the query so that it sorts alphabetically by department (A to Z),
 -- and within each department, sorts by last name (A to Z).
 
-SELECT VERSION();
+--   1. The employee's first name and last name merged together as 'full_name'
+SELECT 
+    first_name ||  ' ' ||  last_name as full_name,
+    department,
+    title AS job_title
 
+FROM employees;
 
 
 
@@ -45,8 +50,14 @@ SELECT VERSION();
 --   5. A calculated column called 'unit_profit' (retail_price minus cost_to_produce)
 -- Sort the result set so that the most profitable products appear at the top.
 
-select product_name, category, cost_to_produce, retail_price, retail_price - cost_to_produce as unit_profit
- from products;
+select 
+    product_name,
+    category,
+    cost_to_produce,
+    retail_price,
+    retail_price - cost_to_produce as unit_profit
+from products
+    order by unit_profit DESC 
 
 
 
@@ -58,8 +69,10 @@ select product_name, category, cost_to_produce, retail_price, retail_price - cos
 -- Ensure the output column is labeled 'operational_state' and is 
 -- sorted in alphabetical order.
 
--- [YOUR QUERY HERE]
-
+select DISTINCT
+    state as operational_state
+from locations
+order by operational_state asc;
 
 
 
@@ -74,7 +87,13 @@ select product_name, category, cost_to_produce, retail_price, retail_price - cos
 --   4. The exact dollar increase (aliased as 'dollar_adjustment')
 -- Sort from the largest proposed salary to the lowest.
 
--- [YOUR QUERY HERE]
+select 
+    last_name,
+    salary,
+    salary + (salary * .08) as proposed_salary,
+    salary * .08 percent_increase
+from employees
+    ORDER BY  proposed_salary desc;
 
 
 
@@ -86,4 +105,8 @@ select product_name, category, cost_to_produce, retail_price, retail_price - cos
 -- and 'title' currently active across the company.
 -- Order the results by department, then by title.
 
--- [YOUR QUERY HERE]
+select DISTINCT
+department, title 
+from employees
+ORDER BY department, title
+;
